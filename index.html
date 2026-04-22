@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio – Astri Dewi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Syne:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              sk: {
+                DEFAULT: "#38BDF8",
+                light: "#7DD3FC",
+                dark: "#0284C7",
+                soft: "#F0F9FF",
+                mid: "#E0F2FE",
+              },
+            },
+            fontFamily: {
+              display: ["Syne", "sans-serif"],
+              sans: ["Outfit", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: #f0f9ff;
+        font-family: "Outfit", sans-serif;
+      }
+      .fade-up {
+        opacity: 0;
+        transform: translateY(22px);
+        animation: fu 0.65s forwards;
+      }
+      @keyframes fu {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .d1 {
+        animation-delay: 0.1s;
+      }
+      .d2 {
+        animation-delay: 0.22s;
+      }
+      .d3 {
+        animation-delay: 0.36s;
+      }
+      .d4 {
+        animation-delay: 0.5s;
+      }
+      .d5 {
+        animation-delay: 0.64s;
+      }
+      .card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 40px rgba(56, 189, 248, 0.2);
+      }
+      .skill-bar {
+        transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      /* floating shapes */
+      .shape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.1;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen text-sky-900">
+    <!-- NAV -->
+    <header
+      class="sticky top-0 z-50 bg-[#F0F9FF]/90 backdrop-blur border-b border-sky-100"
+    >
+      <div
+        class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between"
+      >
+        <a href="index.html" class="flex items-center gap-2.5">
+          <span
+            class="w-9 h-9 rounded-2xl bg-gradient-to-br from-sk to-sk-dark flex items-center justify-center text-white text-sm shadow-md shadow-sky-200"
+            ><i class="fa-solid fa-brain"></i
+          ></span>
+          <span class="font-display font-bold text-sky-900 text-lg"
+            >Astri<span class="text-sk">.</span
+            ><span class="text-sky-400 font-normal text-sm"
+              >portfolio</span
+            ></span
+          >
+        </a>
+        <nav
+          class="hidden md:flex items-center gap-7 text-sm font-medium text-sky-400"
+        >
+          <a href="#" class="text-sk font-semibold">Beranda</a>
+          <a href="#tugas" class="hover:text-sk transition-colors">Tugas</a>
+          <a href="#tentang" class="hover:text-sk transition-colors">Tentang</a>
+          <a href="#kontak" class="hover:text-sk transition-colors">Kontak</a>
+        </nav>
+        <button
+          id="mb"
+          class="md:hidden w-9 h-9 rounded-2xl border border-sky-200 flex items-center justify-center text-sk"
+        >
+          <i class="fa-solid fa-bars text-sm"></i>
+        </button>
+      </div>
+      <div
+        id="mm"
+        class="hidden md:hidden bg-[#F0F9FF] border-t border-sky-100 px-6 py-4 space-y-3 text-sm font-medium text-sky-400"
+      >
+        <a href="#" class="block text-sk font-semibold">Beranda</a>
+        <a href="#tugas" class="block">Tugas</a>
+        <a href="#tentang" class="block">Tentang</a>
+        <a href="#kontak" class="block">Kontak</a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="relative overflow-hidden">
+      <div class="shape w-80 h-80 bg-sky-300 -top-20 -right-20"></div>
+      <div class="shape w-56 h-56 bg-cyan-300 bottom-10 -left-16"></div>
+      <div
+        class="max-w-5xl mx-auto px-6 pt-20 pb-20 relative z-10 flex flex-col md:flex-row items-center gap-12"
+      >
+        <div class="flex-1 text-center md:text-left">
+          <span
+            class="fade-up d1 inline-flex items-center gap-2 bg-sky-100 border border-sky-200 text-sk text-xs font-semibold px-4 py-1.5 rounded-xl mb-5"
+          >
+            <i class="fa-solid fa-graduation-cap"></i> J2023 · Semester 6 ·
+            23110045
+          </span>
+          <h1
+            class="fade-up d2 font-display text-4xl md:text-5xl font-extrabold text-sky-900 leading-tight mb-4"
+          >
+            Halo, saya<br /><span class="text-sk">Astri Dewi</span> ☁️
+          </h1>
+          <p
+            class="fade-up d3 text-sky-500 text-sm leading-relaxed max-w-md mb-8"
+          >
+            Kumpulan tugas mata kuliah
+            <strong class="text-sky-700">Kecerdasan Buatan</strong> — STMIK
+            Mardira Indonesia, Semester Genap 2025/2026.
+          </p>
+          <div
+            class="fade-up d4 flex flex-wrap gap-3 justify-center md:justify-start"
+          >
+            <a
+              href="#tugas"
+              class="inline-flex items-center gap-2 bg-gradient-to-r from-sk to-sk-dark text-white font-semibold px-6 py-3 rounded-2xl shadow-md shadow-sky-200 transition-all hover:shadow-lg hover:shadow-sky-300"
+            >
+              <i class="fa-solid fa-folder-open text-sm"></i> Lihat Tugas
+            </a>
+            <a
+              href="#tentang"
+              class="inline-flex items-center gap-2 bg-white border border-sky-200 text-sk hover:bg-sky-50 font-semibold px-6 py-3 rounded-2xl transition-all"
+            >
+              <i class="fa-solid fa-user text-sm"></i> Tentang Saya
+            </a>
+          </div>
+        </div>
+        <!-- Avatar -->
+        <div class="fade-up d5 flex-shrink-0">
+          <div class="relative w-52 h-52 md:w-60 md:h-60">
+            <div
+              class="absolute inset-0 rounded-3xl border-2 border-sky-200 bg-sky-50"
+              style="transform: rotate(6deg)"
+            ></div>
+            <div
+              class="absolute inset-0 rounded-3xl bg-gradient-to-br from-sk-light to-sk-dark flex items-center justify-center shadow-xl shadow-sky-200"
+            >
+              <i
+                class="fa-solid fa-user-graduate text-white"
+                style="font-size: 4.5rem; opacity: 0.9"
+              ></i>
+            </div>
+            <span
+              class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-white border border-sky-200 text-sk text-xs font-bold px-4 py-1.5 rounded-xl shadow-sm whitespace-nowrap"
+            >
+              <i class="fa-solid fa-id-badge mr-1"></i> 23110045
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="bg-white border-y border-sky-100 py-5 px-6">
+      <div class="max-w-5xl mx-auto grid grid-cols-4 gap-4 text-center">
+        <div>
+          <p class="text-2xl font-extrabold text-sk font-display">2</p>
+          <p class="text-[11px] text-sky-400 mt-0.5">Tugas Selesai</p>
+        </div>
+        <div>
+          <p class="text-2xl font-extrabold text-sk font-display">6</p>
+          <p class="text-[11px] text-sky-400 mt-0.5">Semester</p>
+        </div>
+        <div>
+          <p class="text-2xl font-extrabold text-sk font-display">2026</p>
+          <p class="text-[11px] text-sky-400 mt-0.5">Tahun Akademik</p>
+        </div>
+        <div>
+          <p class="text-2xl font-extrabold text-sk font-display">KB</p>
+          <p class="text-[11px] text-sky-400 mt-0.5">Mata Kuliah</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TUGAS -->
+    <section id="tugas" class="py-16 px-6">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-10">
+          <span
+            class="inline-flex items-center gap-2 bg-sky-100 border border-sky-200 text-sk text-xs font-semibold px-4 py-1.5 rounded-xl mb-3"
+            ><i class="fa-solid fa-list-check"></i> Kumpulan Tugas</span
+          >
+          <h2 class="font-display text-3xl font-extrabold text-sky-900">
+            Tugas Kecerdasan Buatan
+          </h2>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-5">
+          <a
+            href="tugas1.html"
+            class="card bg-white rounded-3xl p-7 border border-sky-100 block group"
+          >
+            <div class="flex items-start justify-between mb-4">
+              <div
+                class="w-11 h-11 rounded-2xl bg-gradient-to-br from-sk-light to-sk flex items-center justify-center shadow-sm shadow-sky-200"
+              >
+                <i class="fa-solid fa-network-wired text-white"></i>
+              </div>
+              <span
+                class="text-[11px] font-semibold bg-sky-50 border border-sky-200 text-sk px-3 py-1 rounded-xl"
+                >Tugas 1</span
+              >
+            </div>
+            <h3
+              class="font-display font-bold text-sky-900 mb-2 group-hover:text-sk transition-colors"
+            >
+              Algoritma Pencarian BFS & DFS
+            </h3>
+            <p class="text-sky-400 text-xs leading-relaxed mb-4">
+              Implementasi BFS dan DFS untuk penelusuran jalur pada graf tak
+              berarah.
+            </p>
+            <div class="flex gap-2 flex-wrap">
+              <span
+                class="text-[11px] bg-sky-50 text-sk px-3 py-1 rounded-xl border border-sky-100 font-medium"
+                >BFS</span
+              >
+              <span
+                class="text-[11px] bg-sky-50 text-sk px-3 py-1 rounded-xl border border-sky-100 font-medium"
+                >DFS</span
+              >
+              <span
+                class="text-[11px] bg-green-50 text-green-600 px-3 py-1 rounded-xl border border-green-100 font-medium"
+                ><i class="fa-solid fa-check mr-1"></i>Selesai</span
+              >
+            </div>
+          </a>
+
+          <a
+            href="tugas2.html"
+            class="card bg-white rounded-3xl p-7 border border-sky-100 block group"
+          >
+            <div class="flex items-start justify-between mb-4">
+              <div
+                class="w-11 h-11 rounded-2xl bg-gradient-to-br from-cyan-300 to-sk-dark flex items-center justify-center shadow-sm shadow-sky-200"
+              >
+                <i class="fa-solid fa-chess text-white"></i>
+              </div>
+              <span
+                class="text-[11px] font-semibold bg-sky-50 border border-sky-200 text-sk px-3 py-1 rounded-xl"
+                >Tugas 2</span
+              >
+            </div>
+            <h3
+              class="font-display font-bold text-sky-900 mb-2 group-hover:text-sk transition-colors"
+            >
+              Minimax & Alpha-Beta Pruning
+            </h3>
+            <p class="text-sky-400 text-xs leading-relaxed mb-4">
+              Algoritma pengambilan keputusan optimal pada permainan
+              Tic-Tac-Toe.
+            </p>
+            <div class="flex gap-2 flex-wrap">
+              <span
+                class="text-[11px] bg-sky-50 text-sk px-3 py-1 rounded-xl border border-sky-100 font-medium"
+                >Minimax</span
+              >
+              <span
+                class="text-[11px] bg-sky-50 text-sk px-3 py-1 rounded-xl border border-sky-100 font-medium"
+                >Alpha-Beta</span
+              >
+              <span
+                class="text-[11px] bg-green-50 text-green-600 px-3 py-1 rounded-xl border border-green-100 font-medium"
+                ><i class="fa-solid fa-check mr-1"></i>Selesai</span
+              >
+            </div>
+          </a>
+
+          <div
+            class="sm:col-span-2 bg-sky-50/60 border-2 border-dashed border-sky-200 rounded-3xl p-6 flex items-center justify-center gap-3 text-sky-300 text-sm font-medium"
+          >
+            <i class="fa-solid fa-plus text-sky-300 text-lg"></i> Tugas
+            berikutnya akan ditambahkan di sini
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TENTANG -->
+    <section id="tentang" class="py-16 px-6 bg-white border-y border-sky-100">
+      <div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-12">
+        <div class="flex-1">
+          <span
+            class="inline-flex items-center gap-2 bg-sky-100 border border-sky-200 text-sk text-xs font-semibold px-4 py-1.5 rounded-xl mb-4"
+            ><i class="fa-solid fa-user"></i> Tentang Saya</span
+          >
+          <h2 class="font-display text-3xl font-extrabold text-sky-900 mb-4">
+            Siapa Saya?
+          </h2>
+          <p class="text-sky-500 text-sm leading-relaxed mb-6">
+            Mahasiswa aktif program studi Sistem Informasi di
+            <strong class="text-sky-700">STMIK Mardira Indonesia</strong>.
+            Portfolio ini dibuat sebagai media pengumpulan tugas mata kuliah
+            <strong class="text-sky-700">Kecerdasan Buatan</strong>.
+          </p>
+          <div class="space-y-3 text-sm">
+            <div class="flex items-center gap-3">
+              <span
+                class="w-9 h-9 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sk flex-shrink-0"
+                ><i class="fa-solid fa-user text-xs"></i
+              ></span>
+              <div>
+                <p class="text-[11px] text-sky-400">Nama</p>
+                <p class="font-semibold text-sky-900">Astri Dewi</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span
+                class="w-9 h-9 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sk flex-shrink-0"
+                ><i class="fa-solid fa-id-card text-xs"></i
+              ></span>
+              <div>
+                <p class="text-[11px] text-sky-400">NIM</p>
+                <p class="font-semibold text-sky-900">23110045</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span
+                class="w-9 h-9 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sk flex-shrink-0"
+                ><i class="fa-solid fa-school text-xs"></i
+              ></span>
+              <div>
+                <p class="text-[11px] text-sky-400">Kampus</p>
+                <p class="font-semibold text-sky-900">
+                  STMIK Mardira Indonesia
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span
+                class="w-9 h-9 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center text-sk flex-shrink-0"
+                ><i class="fa-solid fa-layer-group text-xs"></i
+              ></span>
+              <div>
+                <p class="text-[11px] text-sky-400">Kelas / Semester</p>
+                <p class="font-semibold text-sky-900">J2023 / Semester 6</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-semibold text-sky-900 mb-5">Topik yang Dipelajari</h3>
+          <div class="space-y-4" id="skills"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAK -->
+    <section id="kontak" class="py-16 px-6">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="font-display text-3xl font-extrabold text-sky-900 mb-2">
+          Hubungi Saya
+        </h2>
+        <p class="text-sky-400 text-sm mb-8">Tersedia di berbagai platform</p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a
+            href="mailto:email@example.com"
+            class="flex items-center gap-2 bg-white border border-sky-200 hover:border-sk text-sky-700 hover:text-sk font-semibold px-5 py-3 rounded-2xl transition-all text-sm"
+            ><i class="fa-solid fa-envelope text-sk"></i> email@example.com</a
+          >
+          <a
+            href="#"
+            class="flex items-center gap-2 bg-white border border-sky-200 hover:border-sk text-sky-700 hover:text-sk font-semibold px-5 py-3 rounded-2xl transition-all text-sm"
+            ><i class="fa-brands fa-github"></i> GitHub</a
+          >
+          <a
+            href="#"
+            class="flex items-center gap-2 bg-white border border-sky-200 hover:border-sk text-sky-700 hover:text-sk font-semibold px-5 py-3 rounded-2xl transition-all text-sm"
+            ><i class="fa-brands fa-instagram text-pink-400"></i> Instagram</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer
+      class="bg-white border-t border-sky-100 py-6 text-center text-sky-400 text-xs"
+    >
+      <p>
+        © 2026 Astri Dewi · 23110045 — STMIK Mardira Indonesia · Kelas J2023
+      </p>
+    </footer>
+
+    <script>
+      document.getElementById("mb").onclick = () =>
+        document.getElementById("mm").classList.toggle("hidden");
+      const skills = [
+        { n: "Algoritma Pencarian (BFS / DFS)", p: 85 },
+        { n: "Minimax & Alpha-Beta Pruning", p: 75 },
+        { n: "Logika Fuzzy", p: 60 },
+        { n: "Machine Learning Dasar", p: 50 },
+      ];
+      const c = document.getElementById("skills");
+      skills.forEach((s) => {
+        c.innerHTML += `<div><div class="flex justify-between text-xs mb-1.5"><span class="font-medium text-sky-700">${s.n}</span><span class="text-sk font-semibold">${s.p}%</span></div><div class="w-full bg-sky-50 rounded-full h-2.5 border border-sky-100 overflow-hidden"><div class="skill-bar h-full bg-gradient-to-r from-sk-light to-sk rounded-full" style="width:0" data-t="${s.p}%"></div></div></div>`;
+      });
+      new IntersectionObserver(
+        (e) => {
+          if (e[0].isIntersecting)
+            document
+              .querySelectorAll(".skill-bar")
+              .forEach((b) => (b.style.width = b.dataset.t));
+        },
+        { threshold: 0.3 },
+      ).observe(document.getElementById("tentang"));
+    </script>
+  </body>
+</html>

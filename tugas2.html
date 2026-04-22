@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tugas 2 – Minimax | Astri Dewi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              sk: {
+                DEFAULT: "#38BDF8",
+                light: "#7DD3FC",
+                dark: "#0284C7",
+                soft: "#F0F9FF",
+              },
+            },
+            fontFamily: {
+              display: ["Syne", "sans-serif"],
+              sans: ["Outfit", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background: #f0f9ff;
+        font-family: "Outfit", sans-serif;
+      }
+      pre,
+      code {
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+      }
+      .fade-up {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fu 0.6s forwards;
+      }
+      @keyframes fu {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .d1 {
+        animation-delay: 0.1s;
+      }
+      .d2 {
+        animation-delay: 0.2s;
+      }
+      .cell {
+        width: 80px;
+        height: 80px;
+        background: white;
+        border-radius: 16px;
+        border: 2px solid #e0f2fe;
+        font-size: 2rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .cell:hover:not(.taken) {
+        background: #f0f9ff;
+        border-color: #38bdf8;
+        transform: scale(1.04);
+      }
+      .cell.taken {
+        cursor: default;
+      }
+      .cell.xm {
+        color: #38bdf8;
+      }
+      .cell.om {
+        color: #0284c7;
+      }
+      .cell.win {
+        background: #e0f2fe;
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen text-sky-900">
+    <header
+      class="sticky top-0 z-50 bg-[#F0F9FF]/90 backdrop-blur border-b border-sky-100"
+    >
+      <div
+        class="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between"
+      >
+        <a
+          href="index.html"
+          class="flex items-center gap-2 font-display font-bold text-sky-900"
+          ><span
+            class="w-7 h-7 rounded-2xl bg-gradient-to-br from-sk to-sk-dark flex items-center justify-center text-white text-xs shadow shadow-sky-200"
+            ><i class="fa-solid fa-brain"></i
+          ></span>
+          Astri<span class="text-sk">.</span></a
+        >
+        <div class="flex gap-3 text-sm">
+          <a
+            href="tugas1.html"
+            class="text-sky-400 hover:text-sk transition-colors font-medium"
+            ><i class="fa-solid fa-arrow-left mr-1"></i>Tugas 1</a
+          >
+          <a
+            href="index.html"
+            class="bg-gradient-to-r from-sk to-sk-dark text-white px-4 py-1.5 rounded-2xl font-semibold text-xs hover:opacity-90 transition-opacity shadow shadow-sky-200"
+            ><i class="fa-solid fa-house mr-1"></i>Beranda</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-10 space-y-8">
+      <div class="fade-up">
+        <span
+          class="text-xs font-semibold bg-sky-100 border border-sky-200 text-sk px-3 py-1 rounded-xl"
+          >Tugas 2</span
+        >
+        <h1 class="font-display text-3xl font-extrabold text-sky-900 mt-2">
+          Minimax & Alpha-Beta Pruning
+        </h1>
+        <p class="text-sky-400 text-sm mt-1">
+          Algoritma keputusan optimal untuk permainan dua pemain
+        </p>
+      </div>
+
+      <div class="fade-up d1 grid sm:grid-cols-2 gap-4">
+        <div class="bg-white rounded-3xl p-6 border border-sky-100">
+          <div
+            class="w-10 h-10 rounded-2xl bg-gradient-to-br from-sk-light to-sk flex items-center justify-center mb-3 shadow shadow-sky-100"
+          >
+            <i class="fa-solid fa-arrows-up-down text-white"></i>
+          </div>
+          <h3 class="font-display font-bold text-sky-900 mb-2">Minimax</h3>
+          <p class="text-sky-400 text-xs leading-relaxed">
+            <strong class="text-sky-700">Maximizer</strong> (AI) memaksimalkan
+            skor, <strong class="text-sky-700">Minimizer</strong> (lawan)
+            meminimalkannya. Menelusuri seluruh pohon kemungkinan untuk
+            keputusan optimal.
+          </p>
+        </div>
+        <div class="bg-white rounded-3xl p-6 border border-sky-100">
+          <div
+            class="w-10 h-10 rounded-2xl bg-gradient-to-br from-cyan-300 to-sk-dark flex items-center justify-center mb-3 shadow shadow-sky-100"
+          >
+            <i class="fa-solid fa-scissors text-white"></i>
+          </div>
+          <h3 class="font-display font-bold text-sky-900 mb-2">
+            Alpha-Beta Pruning
+          </h3>
+          <p class="text-sky-400 text-xs leading-relaxed">
+            Memangkas cabang tidak relevan dengan batas
+            <strong class="text-sky-700">alpha</strong> dan
+            <strong class="text-sky-700">beta</strong>. Kompleksitas turun ke
+            O(b^(d/2)) tanpa mengubah keputusan AI.
+          </p>
+        </div>
+      </div>
+
+      <!-- Game -->
+      <div class="fade-up d2 bg-white rounded-3xl p-6 border border-sky-100">
+        <h2 class="font-display font-bold text-sky-900 mb-1">
+          <i class="fa-solid fa-gamepad text-sk mr-2"></i>Demo: Tic-Tac-Toe vs
+          AI
+        </h2>
+        <p class="text-sky-400 text-xs mb-5">
+          Kamu = <strong class="text-sk">X</strong> &nbsp;|&nbsp; AI =
+          <strong class="text-sk-dark">O</strong> &nbsp;·&nbsp; Klik sel untuk
+          bermain!
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 items-start">
+          <div class="flex flex-col items-center gap-4">
+            <div
+              id="status"
+              class="text-sm font-semibold text-sk bg-sky-50 border border-sky-200 px-5 py-2 rounded-2xl"
+            >
+              Giliran kamu!
+            </div>
+            <div id="board" class="grid grid-cols-3 gap-2.5"></div>
+            <div class="flex gap-3">
+              <button
+                id="ng"
+                class="bg-gradient-to-r from-sk to-sk-dark text-white font-semibold text-xs px-5 py-2 rounded-2xl shadow shadow-sky-200 hover:opacity-90 transition-opacity"
+              >
+                <i class="fa-solid fa-rotate mr-1"></i>Ulang
+              </button>
+            </div>
+            <div class="flex gap-4 text-xs text-sky-500 font-medium">
+              <span>Kamu: <strong class="text-sk" id="sx">0</strong></span>
+              <span>AI: <strong class="text-sk-dark" id="so">0</strong></span>
+            </div>
+          </div>
+          <div class="flex-1 space-y-3 w-full">
+            <div class="grid grid-cols-2 gap-3">
+              <div
+                class="bg-sky-50 border border-sky-100 rounded-2xl p-3 text-center"
+              >
+                <p
+                  class="text-lg font-extrabold text-sk font-display"
+                  id="nodes"
+                >
+                  0
+                </p>
+                <p class="text-[11px] text-sky-400">Node dievaluasi</p>
+              </div>
+              <div
+                class="bg-sky-50 border border-sky-100 rounded-2xl p-3 text-center"
+              >
+                <p
+                  class="text-lg font-extrabold text-sk font-display"
+                  id="pruned"
+                >
+                  0
+                </p>
+                <p class="text-[11px] text-sky-400">Cabang dipangkas</p>
+              </div>
+            </div>
+            <div
+              class="bg-sky-50 border border-sky-100 rounded-2xl p-4 text-xs text-sky-500 leading-relaxed"
+            >
+              <strong class="text-sk"
+                ><i class="fa-solid fa-info-circle mr-1"></i>Info:</strong
+              >
+              Alpha-Beta memangkas cabang jika kondisi α ≥ β terpenuhi. Semakin
+              awal pemangkasan terjadi, semakin besar penghematan komputasi.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kode -->
+      <div class="bg-white rounded-3xl p-6 border border-sky-100">
+        <h2 class="font-display font-bold text-sky-900 mb-4">
+          <i class="fa-solid fa-code text-sk mr-2"></i>Kode Alpha-Beta Pruning
+          (Python)
+        </h2>
+        <pre
+          class="bg-slate-900 text-slate-100 rounded-2xl p-5 overflow-x-auto leading-relaxed text-xs"
+        ><code><span class="text-green-400">def</span> <span class="text-yellow-200">minimax</span>(board, depth, alpha, beta, is_max):
+    score = evaluate(board)
+    <span class="text-cyan-300">if</span> score != <span class="text-blue-400">0</span> <span class="text-cyan-300">or not</span> moves_left(board):
+        <span class="text-cyan-300">return</span> score
+    <span class="text-cyan-300">if</span> is_max:
+        best = <span class="text-blue-400">-1000</span>
+        <span class="text-cyan-300">for</span> i, j <span class="text-cyan-300">in</span> empty_cells(board):
+            board[i][j] = <span class="text-green-300">'O'</span>
+            best = max(best, minimax(board, depth+<span class="text-blue-400">1</span>, alpha, beta, <span class="text-blue-400">False</span>))
+            board[i][j] = <span class="text-green-300">'_'</span>
+            alpha = max(alpha, best)
+            <span class="text-cyan-300">if</span> beta <= alpha: <span class="text-slate-400">break</span>  <span class="text-slate-400"># ✂ pruning</span>
+        <span class="text-cyan-300">return</span> best
+    <span class="text-cyan-300">else</span>:
+        best = <span class="text-blue-400">1000</span>
+        <span class="text-cyan-300">for</span> i, j <span class="text-cyan-300">in</span> empty_cells(board):
+            board[i][j] = <span class="text-green-300">'X'</span>
+            best = min(best, minimax(board, depth+<span class="text-blue-400">1</span>, alpha, beta, <span class="text-blue-400">True</span>))
+            board[i][j] = <span class="text-green-300">'_'</span>
+            beta = min(beta, best)
+            <span class="text-cyan-300">if</span> beta <= alpha: <span class="text-slate-400">break</span>  <span class="text-slate-400"># ✂ pruning</span>
+        <span class="text-cyan-300">return</span> best</code></pre>
+      </div>
+
+      <div
+        class="bg-gradient-to-br from-sk to-sk-dark rounded-3xl p-7 text-white shadow-lg shadow-sky-200"
+      >
+        <h2 class="font-display font-bold text-lg mb-2">
+          <i class="fa-solid fa-lightbulb mr-2"></i>Kesimpulan
+        </h2>
+        <p class="text-sky-100 text-sm leading-relaxed">
+          Minimax menghasilkan keputusan optimal pada permainan dua pemain.
+          Alpha-Beta Pruning meningkatkan efisiensi secara signifikan dari
+          O(b^d) menjadi O(b^(d/2)) tanpa mengubah hasil keputusan AI.
+        </p>
+      </div>
+    </div>
+
+    <footer
+      class="bg-white border-t border-sky-100 py-5 text-center text-sky-400 text-xs"
+    >
+      © 2026 Astri Dewi · 23110045 — STMIK Mardira Indonesia
+    </footer>
+
+    <script>
+      let board = Array(9).fill(null),
+        over = false,
+        sc = { X: 0, O: 0 },
+        nodes = 0,
+        pruned = 0;
+      const WL = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
+      function win(b) {
+        for (const [a, c, d] of WL)
+          if (b[a] && b[a] === b[c] && b[a] === b[d])
+            return { w: b[a], l: [a, c, d] };
+        if (b.every((v) => v)) return { w: "draw", l: [] };
+        return null;
+      }
+      function ev(b) {
+        const r = win(b);
+        return r ? (r.w === "O" ? 10 : r.w === "X" ? -10 : 0) : 0;
+      }
+      function mm(b, a, bt, mx) {
+        nodes++;
+        const s = ev(b);
+        if (s || b.every((v) => v)) return s;
+        if (mx) {
+          let best = -Infinity;
+          for (let i = 0; i < 9; i++) {
+            if (!b[i]) {
+              b[i] = "O";
+              best = Math.max(best, mm(b, a, bt, false));
+              b[i] = null;
+              a = Math.max(a, best);
+              if (bt <= a) {
+                pruned++;
+                break;
+              }
+            }
+          }
+          return best;
+        } else {
+          let best = Infinity;
+          for (let i = 0; i < 9; i++) {
+            if (!b[i]) {
+              b[i] = "X";
+              best = Math.min(best, mm(b, a, bt, true));
+              b[i] = null;
+              bt = Math.min(bt, best);
+              if (bt <= a) {
+                pruned++;
+                break;
+              }
+            }
+          }
+          return best;
+        }
+      }
+      function best() {
+        nodes = 0;
+        pruned = 0;
+        let bv = -Infinity,
+          bi = -1;
+        for (let i = 0; i < 9; i++) {
+          if (!board[i]) {
+            board[i] = "O";
+            const v = mm(board, -Infinity, Infinity, false);
+            board[i] = null;
+            if (v > bv) {
+              bv = v;
+              bi = i;
+            }
+          }
+        }
+        document.getElementById("nodes").textContent = nodes;
+        document.getElementById("pruned").textContent = pruned;
+        return bi;
+      }
+      function render(wl = []) {
+        const b = document.getElementById("board");
+        b.innerHTML = "";
+        board.forEach((v, i) => {
+          const c = document.createElement("div");
+          c.className =
+            "cell" +
+            (v ? " taken" : "") +
+            (v === "X" ? " xm" : v === "O" ? " om" : "") +
+            (wl.includes(i) ? " win" : "");
+          c.textContent = v === "X" ? "✕" : v === "O" ? "○" : "";
+          if (!v && !over) c.onclick = () => move(i);
+          b.appendChild(c);
+        });
+      }
+      function setS(t, cls = "text-sk") {
+        const el = document.getElementById("status");
+        el.className = `text-sm font-semibold bg-sky-50 border border-sky-200 px-5 py-2 rounded-2xl ${cls}`;
+        el.textContent = t;
+      }
+      function end(r) {
+        over = true;
+        if (r.w === "X") {
+          sc.X++;
+          document.getElementById("sx").textContent = sc.X;
+          setS("🎉 Kamu menang!", "text-green-600");
+        } else if (r.w === "O") {
+          sc.O++;
+          document.getElementById("so").textContent = sc.O;
+          setS("🤖 AI menang!", "text-red-500");
+        } else setS("🤝 Seri!", "text-sky-400");
+        render(r.l);
+      }
+      function move(i) {
+        if (board[i] || over) return;
+        board[i] = "X";
+        render();
+        const r = win(board);
+        if (r) {
+          end(r);
+          return;
+        }
+        setS("AI berpikir...", "text-sk-dark");
+        setTimeout(() => {
+          const bi = best();
+          board[bi] = "O";
+          render();
+          const r2 = win(board);
+          if (r2) end(r2);
+          else setS("Giliran kamu!");
+        }, 300);
+      }
+      document.getElementById("ng").onclick = () => {
+        board = Array(9).fill(null);
+        over = false;
+        setS("Giliran kamu!");
+        document.getElementById("nodes").textContent = 0;
+        document.getElementById("pruned").textContent = 0;
+        render();
+      };
+      render();
+    </script>
+  </body>
+</html>
